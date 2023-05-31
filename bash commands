@@ -1,1 +1,11 @@
+$ sudo dnf install git-all
+sudo apt-get install tree
+tree catkin_ws
+tree <path to the folder>
+cd catkin_ws/src 
+
+
+
+
+
 
