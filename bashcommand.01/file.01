@@ -1,0 +1,138 @@
+Filesystem Command-line Tools
+rospack/rosstack A tool inspecting packages/stacks.
+roscd Changes directories to a package or
+stack.
+rosls Lists package or stack information.
+roscreate-pkg Creates a new ROS package.
+roscreate-stack Creates a new ROS stack.
+rosdep Installs ROS package system dependencies.
+rosmake Builds a ROS package.
+roswtf Displays a errors and warnings about a
+running ROS system or launch file.
+rxdeps Displays package structure and dependencies.
+Usage:
+$ rospack find [package]
+$ roscd [package[/subdir]]
+$ rosls [package[/subdir]]
+$ roscreate-pkg [package name]
+$ rosmake [package]
+$ rosdep install [package]
+$ roswtf or roswtf [file]
+$ rxdeps [options]
+Common Command-line Tools
+roscore
+A collection of nodes and programs that are pre-requisites of a
+ROS-based system. You must have a roscore running in order
+for ROS nodes to communicate.
+roscore is currently defined as:
+master
+parameter server
+rosout
+Usage:
+$ roscore
+rosmsg/rossrv
+rosmsg/rossrv displays Message/Service (msg/srv) data
+structure definitions.
+Commands:
+rosmsg show Display the fields in the msg.
+rosmsg users Search for code using the msg.
+rosmsg md5 Display the msg md5 sum.
+rosmsg package List all the messages in a package.
+rosnode packages List all the packages with messages.
+Examples:
+Display the Pose msg:
+$ rosmsg show Pose
+List the messages in nav msgs:
+$ rosmsg package nav msgs
+List the files using sensor msgs/CameraInfo:
+$ rosmsg users sensor msgs/CameraInfo
+rosrun
+rosrun allows you to run an executable in an arbitrary package
+without having to cd (or roscd) there first.
+Usage:
+$ rosrun package executable
+Example:
+Run turtlesim:
+$ rosrun turtlesim turtlesim node
+rosnode
+Displays debugging information about ROS nodes, including
+publications, subscriptions and connections.
+Commands:
+rosnode ping Test connectivity to node.
+rosnode list List active nodes.
+rosnode info Print information about a node.
+rosnode machine List nodes running on a particular machine.
+rosnode kill Kills a running node.
+Examples:
+Kill all nodes:
+$ rosnode kill -a
+List nodes on a machine:
+$ rosnode machine aqy.local
+Ping all nodes:
+$ rosnode ping --all
+roslaunch
+Starts ROS nodes locally and remotely via SSH, as well as
+setting parameters on the parameter server.
+Examples:
+Launch on a different port:
+$ roslaunch -p 1234 package filename.launch
+Launch a file in a package:
+$ roslaunch package filename.launch
+Launch on the local nodes:
+$ roslaunch --local package filename.launch
+rostopic
+A tool for displaying debug information about ROS topics,
+including publishers, subscribers, publishing rate, and
+messages.
+Commands:
+rostopic bw Display bandwidth used by topic.
+rostopic echo Print messages to screen.
+rostopic hz Display publishing rate of topic.
+rostopic list Print information about active topics.
+rostopic pub Publish data to topic.
+rostopic type Print topic type.
+rostopic find Find topics by type.
+Examples:
+Publish hello at 10 Hz:
+$ rostopic pub -r 10 /topic name std msgs/String hello
+Clear the screen after each message is published:
+$ rostopic echo -c /topic name
+Display messages that match a given Python expression:
+$ rostopic echo --filter "m.data==’foo’" /topic name
+Pipe the output of rostopic to rosmsg to view the msg type:
+$ rostopic type /topic name | rosmsg show
+rosparam
+A tool for getting and setting ROS parameters on the
+parameter server using YAML-encoded files.
+Commands:
+rosparam set Set a parameter.
+rosparam get Get a parameter.
+rosparam load Load parameters from a file.
+rosparam dump Dump parameters to a file.
+rosparam delete Delete a parameter.
+rosparam list List parameter names.
+Examples:
+List all the parameters in a namespace:
+$ rosparam list /namespace
+Setting a list with one as a string, integer, and float:
+$ rosparam set /foo "[’1’, 1, 1.0]"
+Dump only the parameters in a specific namespace to file:
+$ rosparam dump dump.yaml /namespace
+rosservice
+A tool for listing and querying ROS services.
+Commands:
+rosservice list Print information about active services.
+rosservice node Print the name of the node providing a
+service.
+rosservice call Call the service with the given args.
+rosservice args List the arguments of a service.
+rosservice type Print the service type.
+rosservice uri Print the service ROSRPC uri.
+rosservice find Find services by service type.
+Examples:
+Call a service from the command-line:
+$ rosservice call /add two ints 1 2
+Pipe the output of rosservice to rossrv to view the srv type:
+$ rosservice type add two ints | rossrv show
+Display all services of a particular type:
+$ rosservice find rospy tutorials/AddTwoInts
